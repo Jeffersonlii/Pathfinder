@@ -1,6 +1,6 @@
 class Dijksta {
     constructor(state) {
-        this.maxweight = 10000;
+        this.maxweight = 99999;
         this.state = state;
         this.heap = new Heap();
         this.destID = this.getHeapId(this.state.dest);
@@ -29,15 +29,13 @@ class Dijksta {
         let cur = this.heap.popmin();
         let totalEnergy = cur.value;
         let coord = this.idToCoord(cur.id);
-
         let affectedBlocks = [];
-        console.log(cur.value);
-        if (cur.id === this.destID || cur.value === this.maxweight) {
+        let curBlock = this.state.state[coord.y][coord.x];
+
+        if (cur.id === this.destID) {
             this.finished = true;
             return affectedBlocks;
         }
-
-        let curBlock = this.state.state[coord.y][coord.x];
 
         let processNeighbour = ({ nX, nY }) => {
             let neighbourId = this.getHeapId({ y: nY, x: nX });
@@ -50,14 +48,11 @@ class Dijksta {
             if (newCost < oldCost) {
                 this.heap.decreasePrio(neighbourId, newCost);
                 neighbourblock['parent'] = coord;
-            } else {
-                return;
+                if (neighbourblock.role === 'unfilled') {
+                    neighbourblock.role = 'processed';
+                }
+                affectedBlocks.push({ x: nX, y: nY });
             }
-
-            if (neighbourblock.role === 'unfilled') {
-                neighbourblock.role = 'processed';
-            }
-            affectedBlocks.push({ x: nX, y: nY });
         };
         if (coord.y > 0) {
             //up

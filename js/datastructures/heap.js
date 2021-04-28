@@ -2,6 +2,7 @@ class Heap {
     constructor() {
         this.heapArr = [];
         this.idToIndex = {};
+        this.maxPrio = 99999;
     }
 
     _swap(index1, index2) {
@@ -32,11 +33,11 @@ class Heap {
 
         let leftChild =
             leftchildIndex > this.heapArr.length - 1
-                ? { value: 99999999 }
+                ? { value: this.maxPrio }
                 : this.heapArr[leftchildIndex];
         let rightChild =
             rightchildIndex > this.heapArr.length - 1
-                ? { value: 99999999 }
+                ? { value: this.maxPrio }
                 : this.heapArr[rightchildIndex];
 
         while (self.value > Math.min(leftChild.value, rightChild.value)) {
@@ -52,11 +53,11 @@ class Heap {
             rightchildIndex = index * 2 + 2;
             leftChild =
                 leftchildIndex > this.heapArr.length - 1
-                    ? { value: 99999999 }
+                    ? { value: this.maxPrio }
                     : this.heapArr[leftchildIndex];
             rightChild =
                 rightchildIndex > this.heapArr.length - 1
-                    ? { value: 99999999 }
+                    ? { value: this.maxPrio }
                     : this.heapArr[rightchildIndex];
         }
     }
@@ -68,10 +69,10 @@ class Heap {
     }
     popmin() {
         let min = this.heapArr[0];
-
         let worst = this.heapArr.pop();
         if (this.heapArr.length !== 0) {
             this.heapArr[0] = worst;
+            this.idToIndex[worst.id] = 0;
             this._heapify(0);
         }
         this.idToIndex[min.id] = undefined;
@@ -86,7 +87,11 @@ class Heap {
     }
 
     getPrio(id) {
-        if (!this.idToIndex[id] || !this.heapArr[this.idToIndex[id]]) return -1;
+        if (
+            this.idToIndex[id] === undefined ||
+            !this.heapArr[this.idToIndex[id]]
+        )
+            return -1;
         return this.heapArr[this.idToIndex[id]].value;
     }
 }

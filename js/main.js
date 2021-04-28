@@ -3,6 +3,17 @@
     let gridState;
     let delay = 20;
 
+    let updateBlockRole = ({ x, y }, role) => {
+        ['start', 'dest'].map((str) => {
+            if (gridState.state[y][x].role === str) {
+                gridState[str] = { x: -1, y: -1 };
+            }
+        });
+
+        gridState.state[y][x].role = role;
+        new Ui().refreshGridBlock(gridState, { x, y });
+    };
+
     let onInteract = (e, coords) => {
         if (e.buttons == 1) {
             ['start', 'dest'].map((str) => {
@@ -10,25 +21,14 @@
                 if (toolMode === str) {
                     if (gridState[str].x !== -1) {
                         //unassign previous node
-                        gridState.state[gridState[str].y][
-                            gridState[str].x
-                        ].role = 'unfilled';
-                        new Ui().refreshGridBlock(gridState, gridState[str]);
+                        updateBlockRole(gridState[str], 'unfilled');
                     }
                     gridState[str] = coords;
                 }
             });
-            gridState.state[coords.y][coords.x].role = toolMode;
-            new Ui().refreshGridBlock(gridState, coords);
+            updateBlockRole(coords, toolMode);
         } else if (e.buttons == 2) {
-            ['start', 'dest'].map((str) => {
-                if (gridState.state[coords.y][coords.x].role === str) {
-                    gridState[str] = { x: -1, y: -1 };
-                }
-            });
-
-            gridState.state[coords.y][coords.x].role = 'unfilled';
-            new Ui().refreshGridBlock(gridState, coords);
+            updateBlockRole(coords, 'unfilled');
         }
     };
 
@@ -122,7 +122,12 @@
                         });
                         await sleep(delay);
                     }
-                    await drawPath(worker.getPath());
+                    let path = worker.getPath();
+                    if (path.length === 0) {
+                        alert('No Path Found');
+                    } else {
+                        await drawPath(path);
+                    }
                 }
             });
 

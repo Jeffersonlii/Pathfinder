@@ -62,20 +62,20 @@ body {
     cursor: pointer;
 }
 .block:hover {
-    background-color: black;
+    background-color: lightgray;
 }
 
 .start {
     background-color: green;
 }
 .dest {
-    background-color: yellow !important;
+    background-color: red;
 }
 .wall {
-    background-color: blue !important;
+    background-color: black !important;
 }
 .path {
-    background-color: lightgreen;
+    background-color: skyblue;
 }
 .processed {
     animation-name: processed;
@@ -102,14 +102,14 @@ body {
     height: 3rem;
     display: flex;
     align-items: center;
-    padding-left: 1rem;
+    transition: all 0.2s;
+    justify-content: center;
 }
 .custom-button:hover {
     background: black;
     color: white;
 }
 .custom-slider {
-    -webkit-appearance: none;
     width: calc(100% - 1rem);
     height: 25px;
     background: white;
