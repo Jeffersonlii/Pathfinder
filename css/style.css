@@ -1,5 +1,4 @@
 html {
-    height: 100%;
     font-size: 14px;
 }
 *,
@@ -10,6 +9,25 @@ html {
     -webkit-app-region: no-drag;
     cursor: default;
     font-family: 'Lato', sans-serif;
+}
+a {
+    color: lightblue;
+    cursor: pointer;
+}
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
 }
 body {
     color: white;
@@ -23,8 +41,6 @@ body {
     background-color: black;
 }
 #controls {
-    margin: 1rem;
-
     background-color: rgba(128, 128, 128, 0.2);
     width: calc(100% - 2rem);
     display: flex;
@@ -40,6 +56,7 @@ body {
     height: 100%;
     display: flex;
     align-items: center;
+    margin: 2rem;
 }
 #gridarea {
     display: grid;
@@ -51,6 +68,8 @@ body {
 }
 .title {
     height: 2rem;
+
+    white-space: nowrap;
 }
 .block {
     display: flex;
@@ -119,4 +138,15 @@ body {
     border-radius: 6px;
     padding: 0.5rem;
     height: 2rem;
+}
+
+#text {
+    display: flex;
+    margin: 2rem;
+    flex-direction: column;
+}
+@media only screen and (max-width: 1300px) {
+    #gridsection {
+        flex-direction: column;
+    }
 }
