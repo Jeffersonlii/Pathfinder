@@ -36,7 +36,7 @@
     };
 
     let resetGrid = () => {
-        let dim = 20;
+        let dim = 40;
         let state = [];
         for (let i = 0; i < dim; i++) {
             let intermediateArr = [];

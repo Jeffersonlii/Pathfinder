@@ -60,8 +60,8 @@ body {
 }
 #gridarea {
     display: grid;
-    grid-template-columns: repeat(20, 1fr);
-    grid-template-rows: repeat(20, 1fr);
+    grid-template-columns: repeat(40, 1fr);
+    grid-template-rows: repeat(40, 1fr);
     grid-gap: 1px;
     width: min(80vh, 80vw);
     height: min(80vh, 80vw);
@@ -91,7 +91,7 @@ body {
     background-color: red;
 }
 .wall {
-    background-color: black !important;
+    background-color: black;
 }
 .path {
     background-color: skyblue;
