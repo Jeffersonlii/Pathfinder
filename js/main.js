@@ -2,6 +2,7 @@
     let toolMode = 'start'; // 'start', 'dest', 'wall'
     let gridState;
     let delay = 20;
+    let disableInteraction = false;
 
     let updateBlockRole = ({ x, y }, role) => {
         ['start', 'dest'].map((str) => {
@@ -15,20 +16,22 @@
     };
 
     let onInteract = (e, coords) => {
-        if (e.buttons == 1) {
-            ['start', 'dest'].map((str) => {
-                // prevent multiple starting and destination locations
-                if (toolMode === str) {
-                    if (gridState[str].x !== -1) {
-                        //unassign previous node
-                        updateBlockRole(gridState[str], 'unfilled');
+        if (!disableInteraction) {
+            if (e.buttons == 1) {
+                ['start', 'dest'].map((str) => {
+                    // prevent multiple starting and destination locations
+                    if (toolMode === str) {
+                        if (gridState[str].x !== -1) {
+                            //unassign previous node
+                            updateBlockRole(gridState[str], 'unfilled');
+                        }
+                        gridState[str] = coords;
                     }
-                    gridState[str] = coords;
-                }
-            });
-            updateBlockRole(coords, toolMode);
-        } else if (e.buttons == 2) {
-            updateBlockRole(coords, 'unfilled');
+                });
+                updateBlockRole(coords, toolMode);
+            } else if (e.buttons == 2) {
+                updateBlockRole(coords, 'unfilled');
+            }
         }
     };
 
@@ -102,31 +105,39 @@
         document
             .getElementById('reset-button')
             .addEventListener('click', (e) => {
-                resetGrid();
+                if (!disableInteraction) {
+                    resetGrid();
+                }
             });
 
         document
             .getElementById('dkAlgo')
             .addEventListener('click', async (e) => {
-                if (gridState.start.x === -1 || gridState.dest.x === -1) {
-                    alert(
-                        'Please make sure starting and destination points are defined.'
-                    );
-                } else {
-                    removeGenerated();
-                    let worker = new Dijksta(gridState).iterativeSolver();
-                    while (worker.hasNext()) {
-                        let { state, affectedBlocks } = worker.next();
-                        affectedBlocks.forEach((coords) => {
-                            new Ui().refreshGridBlock(state, coords);
-                        });
-                        await sleep(delay);
-                    }
-                    let path = worker.getPath();
-                    if (path.length === 0) {
-                        alert('No Path Found');
+                if (!disableInteraction) {
+                    if (gridState.start.x === -1 || gridState.dest.x === -1) {
+                        alert(
+                            'Please make sure starting and destination points are defined.'
+                        );
                     } else {
-                        await drawPath(path);
+                        disableInteraction = true;
+                        new Ui().disableButtons();
+                        removeGenerated();
+                        let worker = new Dijksta(gridState).iterativeSolver();
+                        while (worker.hasNext()) {
+                            let { state, affectedBlocks } = worker.next();
+                            affectedBlocks.forEach((coords) => {
+                                new Ui().refreshGridBlock(state, coords);
+                            });
+                            await sleep(delay);
+                        }
+                        let path = worker.getPath();
+                        if (path.length === 0) {
+                            alert('No Path Found');
+                        } else {
+                            await drawPath(path);
+                        }
+                        disableInteraction = false;
+                        new Ui().enableButtons();
                     }
                 }
             });

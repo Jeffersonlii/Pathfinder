@@ -105,6 +105,9 @@ body {
     transition: all 0.2s;
     justify-content: center;
 }
+.disabled {
+    opacity: 0.5;
+}
 .custom-button:hover {
     background: black;
     color: white;

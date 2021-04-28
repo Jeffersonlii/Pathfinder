@@ -34,4 +34,15 @@ class Ui {
     _getGridHTMLId(coords) {
         return `block_${JSON.stringify(coords)}`;
     }
+
+    disableButtons() {
+        for (let element of document.getElementsByClassName('custom-button')) {
+            element.classList.add('disabled');
+        }
+    }
+    enableButtons() {
+        for (let element of document.getElementsByClassName('custom-button')) {
+            element.classList.remove('disabled');
+        }
+    }
 }
