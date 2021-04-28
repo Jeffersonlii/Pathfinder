@@ -1,0 +1,119 @@
+html {
+    height: 100%;
+    font-size: 14px;
+}
+*,
+*::after,
+*::before {
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-app-region: no-drag;
+    cursor: default;
+    font-family: 'Lato', sans-serif;
+}
+body {
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+    height: 100%;
+    background-color: black;
+}
+#controls {
+    margin: 1rem;
+
+    background-color: rgba(128, 128, 128, 0.2);
+    width: calc(100% - 2rem);
+    display: flex;
+    padding: 1rem;
+
+    justify-content: center;
+}
+.control {
+    padding: 0.5rem 1rem;
+    width: 10rem;
+}
+#gridsection {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+#gridarea {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    grid-gap: 1px;
+    width: min(80vh, 80vw);
+    height: min(80vh, 80vw);
+}
+.title {
+    height: 2rem;
+}
+.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: aqua;
+    background-color: white;
+    transition: all 0.1s;
+    cursor: pointer;
+}
+.block:hover {
+    background-color: black;
+}
+
+.start {
+    background-color: green;
+}
+.dest {
+    background-color: yellow !important;
+}
+.wall {
+    background-color: blue !important;
+}
+.path {
+    background-color: lightgreen;
+}
+.processed {
+    animation-name: processed;
+    animation-duration: 5s;
+}
+@keyframes processed {
+    0% {
+        background-color: white;
+    }
+    25% {
+        background-color: grey;
+    }
+    100% {
+        background-color: white;
+    }
+}
+
+.custom-button {
+    margin: 0.2rem;
+    background: white;
+    color: black;
+    transition: all 0.1s;
+    cursor: pointer;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+}
+.custom-button:hover {
+    background: black;
+    color: white;
+}
+.custom-slider {
+    -webkit-appearance: none;
+    width: calc(100% - 1rem);
+    height: 25px;
+    background: white;
+    border-radius: 6px;
+    padding: 0.5rem;
+    height: 2rem;
+}

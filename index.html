@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+        </style>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <title>Pathfinder</title>
+    </head>
+    <body onmouseup="mousedown=0;" onmousedown="mousedown=1;">
+        <section id="controls">
+            <div class="control">
+                <div class="title">Select Tool</div>
+
+                <select
+                    name="Tools"
+                    id="tools-select"
+                    class="custom-button"
+                    style="padding-left: 0.2rem"
+                >
+                    <option value="start">Starting Point</option>
+                    <option value="dest">Destination Point</option>
+                    <option value="wall">Build Wall</option>
+                </select>
+            </div>
+            <div class="control">
+                <div class="title">Select Algorithm</div>
+
+                <div class="custom-button" id="dkAlgo" class="algos">
+                    Dijkstra's
+                </div>
+                <!-- <button
+                    class="custom-button"
+                    type="button"
+                    id="dkAlgo"
+                    class="algos"
+                >
+                    Dijkstra's
+                </button> -->
+            </div>
+            <div class="control">
+                <div class="title">Select Speed</div>
+
+                <input
+                    type="range"
+                    min="1"
+                    max="40"
+                    value="20"
+                    id="speed"
+                    class="custom-slider"
+                />
+            </div>
+            <div class="control">
+                <div class="title"></div>
+                <div class="custom-button" id="reset-button">Reset Board</div>
+            </div>
+        </section>
+
+        <section id="gridsection">
+            <div id="gridarea" oncontextmenu="return false;"></div>
+        </section>
+    </body>
+    <script src="js/datastructures/heap.js"></script>
+
+    <script src="js/dijkstra.js"></script>
+    <script src="js/UI.js"></script>
+
+    <script type="text/javascript" src="js/main.js"></script>
+</html>
